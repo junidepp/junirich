@@ -214,13 +214,54 @@ def analyze():
             item[f'ret_{h}d'] = round(float(val), 2) if pd.notna(val) else None
         top10.append(item)
     
+    # 10Y 금리 추이 분석 (1년 전, 2년 전, 5년 전 대비)
+    tnx_now = float(df.loc[target_idx, 'tnx'])
+    
+    def get_tnx_at(days_back):
+        """N일 전 금리값 가져오기 (대략적, 가장 가까운 영업일)"""
+        target = target_idx - pd.Timedelta(days=days_back)
+        # target 이전 가장 가까운 데이터
+        past_data = df[df.index <= target]
+        if len(past_data) == 0:
+            return None
+        return float(past_data.iloc[-1]['tnx'])
+    
+    tnx_1y = get_tnx_at(365)
+    tnx_2y = get_tnx_at(730)
+    tnx_5y = get_tnx_at(1825)
+    
+    # 1년 최고/최저
+    one_year_data = df[df.index >= target_idx - pd.Timedelta(days=365)]
+    tnx_1y_high = float(one_year_data['tnx'].max())
+    tnx_1y_low = float(one_year_data['tnx'].min())
+    
+    # 추세 판정
+    if tnx_1y is not None:
+        diff_1y = tnx_now - tnx_1y
+        if diff_1y > 0.5:
+            tnx_trend = "상승"
+        elif diff_1y < -0.5:
+            tnx_trend = "하락"
+        else:
+            tnx_trend = "보합"
+    else:
+        diff_1y = 0
+        tnx_trend = "보합"
+    
     result = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "target_date": target_idx.strftime('%Y-%m-%d'),
         "current_state": {
             "ndx_close": round(float(df.loc[target_idx, 'close']), 2),
             "vix": round(float(df.loc[target_idx, 'vix']), 2),
-            "tnx": round(float(df.loc[target_idx, 'tnx']), 2),
+            "tnx": round(tnx_now, 2),
+            "tnx_1y_ago": round(tnx_1y, 2) if tnx_1y is not None else None,
+            "tnx_2y_ago": round(tnx_2y, 2) if tnx_2y is not None else None,
+            "tnx_5y_ago": round(tnx_5y, 2) if tnx_5y is not None else None,
+            "tnx_1y_high": round(tnx_1y_high, 2),
+            "tnx_1y_low": round(tnx_1y_low, 2),
+            "tnx_diff_1y": round(diff_1y, 2),
+            "tnx_trend": tnx_trend,
             "rsi14": round(float(features.loc[target_idx, 'rsi14']), 2),
             "bb_pctb": round(float(features.loc[target_idx, 'bb_pctb']), 2),
             "ma_align": int(features.loc[target_idx, 'ma_align'])
