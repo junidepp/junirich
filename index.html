@@ -116,6 +116,41 @@
     font-size: 1.1rem;
     font-weight: bold;
   }
+  .info-guide {
+    font-size: 0.7rem;
+    color: #6b7488;
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+  .info-sub {
+    font-size: 0.75rem;
+    color: #8b95a8;
+    margin-top: 4px;
+  }
+  .trend-up { color: #f08c75; }
+  .trend-down { color: #5dd4ad; }
+  .trend-flat { color: #aaa; }
+  .info-item-wide {
+    background: #232938;
+    padding: 12px;
+    border-radius: 8px;
+    grid-column: span 2;
+  }
+  @media (max-width: 600px) {
+    .info-item-wide { grid-column: span 1; }
+  }
+  .summary-explain {
+    background: #1f2433;
+    border: 1px solid #2a3147;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #a8b2c5;
+    line-height: 1.6;
+  }
+  .summary-explain b { color: #c5d0e5; }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -210,24 +245,35 @@ function render(data) {
           <div class="info-value">${cs.ndx_close.toLocaleString()}</div>
         </div>
         <div class="info-item">
-          <div class="info-label">VIX</div>
+          <div class="info-label">VIX (변동성 지수)</div>
           <div class="info-value">${cs.vix}</div>
+          <div class="info-guide">&lt;15 평온 / 20~30 경계 / &gt;30 위기</div>
         </div>
-        <div class="info-item">
-          <div class="info-label">10Y 금리</div>
+        <div class="info-item-wide">
+          <div class="info-label">10Y 미국채 금리 — ${cs.tnx_trend === '상승' ? '<span class="trend-up">↑ 상승 추세</span>' : cs.tnx_trend === '하락' ? '<span class="trend-down">↓ 하락 추세</span>' : '<span class="trend-flat">→ 보합</span>'}</div>
           <div class="info-value">${cs.tnx}%</div>
+          <div class="info-sub">
+            1년 전: ${cs.tnx_1y_ago !== null ? cs.tnx_1y_ago + '%' : '-'} 
+            (${cs.tnx_diff_1y > 0 ? '+' : ''}${cs.tnx_diff_1y}%p) 
+            · 2년 전: ${cs.tnx_2y_ago !== null ? cs.tnx_2y_ago + '%' : '-'}
+            · 5년 전: ${cs.tnx_5y_ago !== null ? cs.tnx_5y_ago + '%' : '-'}
+          </div>
+          <div class="info-guide">최근 1년 범위: ${cs.tnx_1y_low}% ~ ${cs.tnx_1y_high}%</div>
         </div>
         <div class="info-item">
           <div class="info-label">RSI(14)</div>
           <div class="info-value">${cs.rsi14}</div>
+          <div class="info-guide">&lt;30 과매도 / 50 중립 / &gt;70 과매수</div>
         </div>
         <div class="info-item">
           <div class="info-label">볼린저 %B</div>
           <div class="info-value">${cs.bb_pctb}</div>
+          <div class="info-guide">0 하단(과매도) / 50 중심선 / 100 상단(과매수)</div>
         </div>
         <div class="info-item">
           <div class="info-label">MA 정렬</div>
           <div class="info-value">${cs.ma_align === 1 ? '정배열↑' : cs.ma_align === -1 ? '역배열↓' : '혼조'}</div>
+          <div class="info-guide">MA5/20/60/200 정렬 상태</div>
         </div>
       </div>
     </div>
@@ -253,6 +299,11 @@ function render(data) {
     <div class="card">
       <details>
         <summary>📅 가장 유사한 과거 10개 시점 보기</summary>
+        <div class="summary-explain">
+          <b>거리란?</b> 21개 지표를 좌표로 만든 21차원 공간에서 오늘과 그 날이 얼마나 떨어져있는지를 나타내는 수치.<br>
+          <b>0에 가까울수록 닮음</b>: 0~2 매우 닮음 / 2~4 비슷한 편 / 5+ 좀 다름<br>
+          <b>+1일 / +5일 / +20일</b>: 그 날짜로부터 1일·5일·20일 후 NDX의 실제 수익률 (양수=상승, 음수=하락)
+        </div>
         <table>
           <thead>
             <tr>
