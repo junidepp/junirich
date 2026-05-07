@@ -1,25 +1,146 @@
 {
-  "generated_at": "2026-05-07T00:00:00+00:00",
-  "target_date": "초기 데이터 - GitHub Actions 첫 실행 대기 중",
+  "generated_at": "2026-05-07T05:57:12.735061+00:00",
+  "target_date": "2026-05-06",
   "current_state": {
-    "ndx_close": 0,
-    "vix": 0,
-    "tnx": 0,
-    "rsi14": 0,
-    "bb_pctb": 0,
-    "ma_align": 0
+    "ndx_close": 28599.17,
+    "vix": 17.39,
+    "tnx": 4.36,
+    "rsi14": 81.2,
+    "bb_pctb": 98.17,
+    "ma_align": 1
   },
   "analysis": {
-    "data_period": "대기 중",
-    "total_days": 0,
+    "data_period": "2000-12-29 ~ 2026-05-06",
+    "total_days": 6374,
     "n_neighbors": 200,
     "n_features": 21,
-    "distance_range": [0, 0]
+    "distance_range": [
+      1.92,
+      3.52
+    ]
   },
   "horizons": [
-    {"horizon_days": 1, "horizon_label": "1일 후", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"},
-    {"horizon_days": 5, "horizon_label": "5일 후 (1주)", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"},
-    {"horizon_days": 20, "horizon_label": "20일 후 (1달)", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"}
+    {
+      "horizon_days": 1,
+      "horizon_label": "1일 후",
+      "up_probability": 48.5,
+      "up_count": 97,
+      "total_count": 200,
+      "direction_label": "중립",
+      "direction_icon": "→",
+      "direction_color": "neutral"
+    },
+    {
+      "horizon_days": 5,
+      "horizon_label": "5일 후 (1주)",
+      "up_probability": 54.0,
+      "up_count": 108,
+      "total_count": 200,
+      "direction_label": "중립",
+      "direction_icon": "→",
+      "direction_color": "neutral"
+    },
+    {
+      "horizon_days": 20,
+      "horizon_label": "20일 후 (1달)",
+      "up_probability": 64.0,
+      "up_count": 128,
+      "total_count": 200,
+      "direction_label": "상승 우세",
+      "direction_icon": "📈",
+      "direction_color": "strong-up"
+    }
   ],
-  "top_similar_dates": []
+  "top_similar_dates": [
+    {
+      "date": "2023-06-01",
+      "distance": 1.92,
+      "close": 14441.51,
+      "vix": 15.65,
+      "ret_1d": 0.73,
+      "ret_5d": 0.3,
+      "ret_20d": 5.11
+    },
+    {
+      "date": "2023-06-15",
+      "distance": 1.95,
+      "close": 15185.48,
+      "vix": 14.5,
+      "ret_1d": -0.67,
+      "ret_5d": -1.94,
+      "ret_20d": 3.48
+    },
+    {
+      "date": "2021-11-04",
+      "distance": 1.96,
+      "close": 16346.24,
+      "vix": 15.44,
+      "ret_1d": 0.08,
+      "ret_5d": -1.92,
+      "ret_20d": -3.88
+    },
+    {
+      "date": "2023-06-02",
+      "distance": 2.02,
+      "close": 14546.64,
+      "vix": 14.6,
+      "ret_1d": 0.07,
+      "ret_5d": -0.13,
+      "ret_20d": 4.55
+    },
+    {
+      "date": "2018-01-26",
+      "distance": 2.23,
+      "close": 7022.97,
+      "vix": 11.08,
+      "ret_1d": -0.49,
+      "ret_5d": -3.74,
+      "ret_20d": -0.48
+    },
+    {
+      "date": "2021-11-03",
+      "distance": 2.32,
+      "close": 16144.5,
+      "vix": 15.1,
+      "ret_1d": 1.25,
+      "ret_5d": -0.98,
+      "ret_20d": -0.95
+    },
+    {
+      "date": "2023-06-14",
+      "distance": 2.32,
+      "close": 15005.69,
+      "vix": 13.88,
+      "ret_1d": 1.2,
+      "ret_5d": 0.24,
+      "ret_20d": 3.73
+    },
+    {
+      "date": "2007-10-10",
+      "distance": 2.33,
+      "close": 2176.98,
+      "vix": 16.67,
+      "ret_1d": -1.66,
+      "ret_5d": 0.1,
+      "ret_20d": -0.35
+    },
+    {
+      "date": "2007-10-05",
+      "distance": 2.34,
+      "close": 2149.67,
+      "vix": 16.91,
+      "ret_1d": 0.63,
+      "ret_5d": 1.32,
+      "ret_20d": 2.99
+    },
+    {
+      "date": "2020-01-13",
+      "distance": 2.34,
+      "close": 9070.65,
+      "vix": 12.32,
+      "ret_1d": -0.41,
+      "ret_5d": 1.06,
+      "ret_20d": 4.93
+    }
+  ]
 }
