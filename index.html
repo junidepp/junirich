@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDX 패턴 분석</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
+    background: #0e1117;
+    color: #e6e6e6;
+    padding: 20px;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #1a1f2e;
+    border: 1px solid #2a3147;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .subtitle {
+    color: #8b95a8;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: #8b95a8;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .meta span {
+    background: #232938;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .horizons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  @media (max-width: 600px) {
+    .horizons { grid-template-columns: 1fr; }
+  }
+  .horizon-card {
+    background: #232938;
+    border-radius: 10px;
+    padding: 18px;
+    border-left: 4px solid #4a5278;
+    transition: transform 0.2s;
+  }
+  .horizon-card:hover { transform: translateY(-2px); }
+  .horizon-card.strong-up { border-left-color: #00c896; }
+  .horizon-card.weak-up { border-left-color: #5dd4ad; }
+  .horizon-card.neutral { border-left-color: #888; }
+  .horizon-card.weak-down { border-left-color: #f08c75; }
+  .horizon-card.strong-down { border-left-color: #ff5252; }
+  .horizon-label {
+    font-size: 0.85rem;
+    color: #8b95a8;
+    margin-bottom: 4px;
+  }
+  .direction {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  .direction.strong-up { color: #00c896; }
+  .direction.weak-up { color: #5dd4ad; }
+  .direction.neutral { color: #aaa; }
+  .direction.weak-down { color: #f08c75; }
+  .direction.strong-down { color: #ff5252; }
+  .probability {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  .probability-detail {
+    font-size: 0.8rem;
+    color: #8b95a8;
+    margin-top: 4px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .info-item {
+    background: #232938;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .info-label {
+    font-size: 0.75rem;
+    color: #8b95a8;
+    margin-bottom: 4px;
+  }
+  .info-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 0.85rem;
+  }
+  th, td {
+    padding: 8px;
+    text-align: right;
+    border-bottom: 1px solid #2a3147;
+  }
+  th {
+    background: #232938;
+    color: #8b95a8;
+    font-weight: 500;
+    text-align: center;
+  }
+  td:first-child, th:first-child { text-align: center; }
+  .pos { color: #5dd4ad; }
+  .neg { color: #f08c75; }
+  .loading {
+    text-align: center;
+    padding: 60px;
+    color: #8b95a8;
+  }
+  .error {
+    background: #3a1f1f;
+    border: 1px solid #6b2a2a;
+    color: #ff8888;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .footer {
+    text-align: center;
+    color: #5a6478;
+    font-size: 0.75rem;
+    margin-top: 20px;
+    padding: 12px;
+  }
+  details {
+    margin-top: 12px;
+  }
+  summary {
+    cursor: pointer;
+    color: #8b95a8;
+    font-size: 0.85rem;
+    padding: 8px;
+    user-select: none;
+  }
+  summary:hover { color: #fff; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="root">
+    <div class="loading">데이터 불러오는 중...</div>
+  </div>
+</div>
+
+<script>
+async function loadData() {
+  const root = document.getElementById('root');
+  try {
+    // 캐시 방지를 위한 타임스탬프
+    const res = await fetch('data/result.json?t=' + Date.now());
+    if (!res.ok) throw new Error('데이터 파일이 없습니다. GitHub Actions가 아직 실행되지 않았을 수 있습니다.');
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    root.innerHTML = `<div class="card"><div class="error">⚠️ ${e.message}</div></div>`;
+  }
+}
+
+function render(data) {
+  const cs = data.current_state;
+  const a = data.analysis;
+  
+  let html = `
+    <div class="card">
+      <h1>📊 NDX 패턴 분석</h1>
+      <div class="subtitle">기준일: ${data.target_date}</div>
+      <div class="meta">
+        <span>분석 기간: ${a.data_period}</span>
+        <span>총 ${a.total_days.toLocaleString()}일</span>
+        <span>피처 ${a.n_features}개</span>
+        <span>유사 시점 ${a.n_neighbors}개</span>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">NDX 종가</div>
+          <div class="info-value">${cs.ndx_close.toLocaleString()}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">VIX</div>
+          <div class="info-value">${cs.vix}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">10Y 금리</div>
+          <div class="info-value">${cs.tnx}%</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">RSI(14)</div>
+          <div class="info-value">${cs.rsi14}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">볼린저 %B</div>
+          <div class="info-value">${cs.bb_pctb}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">MA 정렬</div>
+          <div class="info-value">${cs.ma_align === 1 ? '정배열↑' : cs.ma_align === -1 ? '역배열↓' : '혼조'}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h1>🎯 방향 예측</h1>
+      <div class="subtitle">과거 ${a.n_neighbors}개 유사 시점 기반</div>
+      
+      <div class="horizons">
+        ${data.horizons.map(h => `
+          <div class="horizon-card ${h.direction_color}">
+            <div class="horizon-label">${h.horizon_label}</div>
+            <div class="direction ${h.direction_color}">
+              ${h.direction_icon} ${h.direction_label}
+            </div>
+            <div class="probability">${h.up_probability}%</div>
+            <div class="probability-detail">상승 ${h.up_count} / ${h.total_count}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    
+    <div class="card">
+      <details>
+        <summary>📅 가장 유사한 과거 10개 시점 보기</summary>
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>거리</th>
+              <th>NDX 종가</th>
+              <th>VIX</th>
+              <th>+1일</th>
+              <th>+5일</th>
+              <th>+20일</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.top_similar_dates.map(d => `
+              <tr>
+                <td>${d.date}</td>
+                <td>${d.distance}</td>
+                <td>${d.close.toLocaleString()}</td>
+                <td>${d.vix}</td>
+                <td class="${d.ret_1d > 0 ? 'pos' : 'neg'}">${d.ret_1d > 0 ? '+' : ''}${d.ret_1d}%</td>
+                <td class="${d.ret_5d > 0 ? 'pos' : 'neg'}">${d.ret_5d > 0 ? '+' : ''}${d.ret_5d}%</td>
+                <td class="${d.ret_20d > 0 ? 'pos' : 'neg'}">${d.ret_20d > 0 ? '+' : ''}${d.ret_20d}%</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </details>
+    </div>
+    
+    <div class="footer">
+      마지막 업데이트: ${new Date(data.generated_at).toLocaleString('ko-KR')}<br>
+      ⚠️ 보조 지표일 뿐이며 투자 판단의 유일한 근거로 사용하지 마세요
+    </div>
+  `;
+  
+  document.getElementById('root').innerHTML = html;
+}
+
+loadData();
+</script>
+</body>
+</html>

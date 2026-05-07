@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-05-07T00:00:00+00:00",
+  "target_date": "초기 데이터 - GitHub Actions 첫 실행 대기 중",
+  "current_state": {
+    "ndx_close": 0,
+    "vix": 0,
+    "tnx": 0,
+    "rsi14": 0,
+    "bb_pctb": 0,
+    "ma_align": 0
+  },
+  "analysis": {
+    "data_period": "대기 중",
+    "total_days": 0,
+    "n_neighbors": 200,
+    "n_features": 21,
+    "distance_range": [0, 0]
+  },
+  "horizons": [
+    {"horizon_days": 1, "horizon_label": "1일 후", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"},
+    {"horizon_days": 5, "horizon_label": "5일 후 (1주)", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"},
+    {"horizon_days": 20, "horizon_label": "20일 후 (1달)", "up_probability": 0, "up_count": 0, "total_count": 0, "direction_label": "데이터 대기", "direction_icon": "⏳", "direction_color": "neutral"}
+  ],
+  "top_similar_dates": []
+}
