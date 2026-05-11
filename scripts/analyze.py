@@ -295,5 +295,167 @@ def analyze():
     return result
 
 
+# ============================================================
+# SOXL RSI 분석 (별도 모듈)
+# RSI 45/35/30 분할매수 (30/30/40 비중)
+# RSI 70/75 분할매도
+# ============================================================
+def analyze_soxl_rsi():
+    """SOXL 일봉 RSI(14) 계산 + 최근 30일 추이"""
+    print("\n" + "=" * 60)
+    print("SOXL RSI 분석")
+    print("=" * 60)
+    
+    try:
+        # SOXL 데이터 다운로드 (yfinance, 분할조정 가격)
+        print("\n[1/3] SOXL 일봉 다운로드")
+        df = yf.download("SOXL", start="2010-01-01", progress=False, auto_adjust=True)
+        
+        if df.empty:
+            raise Exception("SOXL 데이터 다운로드 실패")
+        
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        
+        print(f"  → {len(df):,}일 ({df.index[0].date()} ~ {df.index[-1].date()})")
+        
+        # RSI(14) 계산 (Wilder's method, EWM)
+        print("\n[2/3] RSI(14) 계산")
+        delta = df['Close'].diff()
+        gain = delta.where(delta > 0, 0)
+        loss = -delta.where(delta < 0, 0)
+        avg_gain = gain.ewm(alpha=1/14, adjust=False).mean()
+        avg_loss = loss.ewm(alpha=1/14, adjust=False).mean()
+        rs = avg_gain / avg_loss
+        df['RSI'] = 100 - (100 / (1 + rs))
+        df = df.dropna()
+        
+        # 현재 시점
+        target_idx = df.index[-1]
+        current_price = float(df.loc[target_idx, 'Close'])
+        current_rsi = float(df.loc[target_idx, 'RSI'])
+        prev_rsi = float(df.iloc[-2]['RSI']) if len(df) >= 2 else current_rsi
+        
+        # 매매 신호 판정
+        signal = get_soxl_signal(current_rsi)
+        
+        # 최근 30일 추이
+        recent = df.tail(30)
+        recent_data = []
+        for date, row in recent.iterrows():
+            recent_data.append({
+                "date": date.strftime('%Y-%m-%d'),
+                "close": round(float(row['Close']), 2),
+                "rsi": round(float(row['RSI']), 2)
+            })
+        
+        # 최근 1년 RSI 통계
+        one_year_ago = target_idx - pd.Timedelta(days=365)
+        one_year_data = df[df.index >= one_year_ago]
+        rsi_max_1y = float(one_year_data['RSI'].max())
+        rsi_min_1y = float(one_year_data['RSI'].min())
+        
+        # 최근 진입/이탈 횟수 (지난 1년 기준)
+        below_30 = int((one_year_data['RSI'] <= 30).sum())
+        below_35 = int((one_year_data['RSI'] <= 35).sum())
+        below_45 = int((one_year_data['RSI'] <= 45).sum())
+        above_70 = int((one_year_data['RSI'] >= 70).sum())
+        above_75 = int((one_year_data['RSI'] >= 75).sum())
+        
+        # 결과
+        result = {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "target_date": target_idx.strftime('%Y-%m-%d'),
+            "current": {
+                "close": round(current_price, 2),
+                "rsi": round(current_rsi, 2),
+                "rsi_prev": round(prev_rsi, 2),
+                "rsi_change": round(current_rsi - prev_rsi, 2)
+            },
+            "signal": signal,
+            "stats_1y": {
+                "rsi_max": round(rsi_max_1y, 2),
+                "rsi_min": round(rsi_min_1y, 2),
+                "days_below_45": below_45,
+                "days_below_35": below_35,
+                "days_below_30": below_30,
+                "days_above_70": above_70,
+                "days_above_75": above_75
+            },
+            "recent_30d": recent_data
+        }
+        
+        print(f"\n[3/3] 결과 저장")
+        output_path = os.path.join(DATA_DIR, "soxl_rsi.json")
+        with open(output_path, 'w', encoding='utf-8') as fp:
+            json.dump(result, fp, ensure_ascii=False, indent=2)
+        
+        print(f"✅ 저장: {output_path}")
+        print(f"\n=== SOXL 현황 ===")
+        print(f"가격: ${current_price:.2f}")
+        print(f"RSI: {current_rsi:.2f} ({prev_rsi:.2f} → {current_rsi:.2f})")
+        print(f"신호: {signal['label']} - {signal['action']}")
+        
+        return result
+    
+    except Exception as e:
+        print(f"❌ SOXL 분석 실패: {e}")
+        # 실패해도 NDX 분석은 진행되도록
+        return None
+
+
+def get_soxl_signal(rsi):
+    """현재 RSI 기준 매매 신호 판정"""
+    if rsi <= 30:
+        return {
+            "label": "강한 매수",
+            "color": "strong-buy",
+            "icon": "🟢🟢",
+            "action": "RSI ≤ 30: 3차 매수 구간 (비중 40%)",
+            "tier": 3
+        }
+    elif rsi <= 35:
+        return {
+            "label": "매수",
+            "color": "buy",
+            "icon": "🟢",
+            "action": "RSI ≤ 35: 2차 매수 구간 (비중 30%)",
+            "tier": 2
+        }
+    elif rsi <= 45:
+        return {
+            "label": "약한 매수",
+            "color": "weak-buy",
+            "icon": "🔵",
+            "action": "RSI ≤ 45: 1차 매수 구간 (비중 30%)",
+            "tier": 1
+        }
+    elif rsi >= 75:
+        return {
+            "label": "강한 매도",
+            "color": "strong-sell",
+            "icon": "🔴🔴",
+            "action": "RSI ≥ 75: 2차 매도 구간 (나머지 매도)",
+            "tier": -2
+        }
+    elif rsi >= 70:
+        return {
+            "label": "매도",
+            "color": "sell",
+            "icon": "🔴",
+            "action": "RSI ≥ 70: 1차 매도 구간 (50% 매도)",
+            "tier": -1
+        }
+    else:
+        return {
+            "label": "관망",
+            "color": "neutral",
+            "icon": "⚪",
+            "action": "RSI 45~70 구간: 진입/청산 신호 없음",
+            "tier": 0
+        }
+
+
 if __name__ == "__main__":
     analyze()
+    analyze_soxl_rsi()
