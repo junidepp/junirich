@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-05-09T00:00:00+00:00",
+  "target_date": "초기 데이터 - GitHub Actions 첫 실행 대기 중",
+  "current": {
+    "close": 0,
+    "rsi": 0,
+    "rsi_prev": 0,
+    "rsi_change": 0
+  },
+  "signal": {
+    "label": "데이터 대기",
+    "color": "neutral",
+    "icon": "⏳",
+    "action": "GitHub Actions 첫 실행 후 데이터가 표시됩니다",
+    "tier": 0
+  },
+  "stats_1y": {
+    "rsi_max": 0,
+    "rsi_min": 0,
+    "days_below_45": 0,
+    "days_below_35": 0,
+    "days_below_30": 0,
+    "days_above_70": 0,
+    "days_above_75": 0
+  },
+  "recent_30d": []
+}
