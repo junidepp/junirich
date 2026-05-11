@@ -35,7 +35,7 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add data/result.json
+          git add data/*.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
