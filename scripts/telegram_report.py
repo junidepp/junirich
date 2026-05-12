@@ -185,6 +185,7 @@ def build_report():
                 lines.append("→ <b>강한 신호 구간</b> (참고 가치 ↑)")
             else:
                 lines.append("→ 약한 신호 (참고 의미 작음)")
+            lines.append("<i>※ 확률 55% 이상 또는 45% 이하인 강한 신호일 때만 참고</i>")
             lines.append("")
     
     # ===== SOXL =====
