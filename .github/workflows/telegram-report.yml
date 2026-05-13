@@ -1,11 +1,11 @@
 name: Daily Telegram Report
 
 on:
-  schedule:
+ # schedule: (cron org를 써서 자체 cron 삭제함)
     # 한국시간 저녁 6시 (UTC 09:00)
-    - cron: '0 9 * * *'
+    # - cron: '0 9 * * *'
     # 한국시간 밤 10시 (UTC 13:00)
-    - cron: '0 13 * * *'
+    # - cron: '0 13 * * *'
   workflow_dispatch:  # 수동 실행 버튼 (테스트용)
 
 permissions:
