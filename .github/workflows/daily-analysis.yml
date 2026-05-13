@@ -1,11 +1,11 @@
 name: Daily NDX Pattern Analysis
 
 on:
-  schedule:
+ # schedule: (cron org를 써서 자체 cron 기능 삭제함)
    # 한국시간 오전 9시, 11시, 오후 1시에 시도 (GitHub Actions 지연 대비)
-    - cron: '0 0 * * *'    # 한국 09:00 (UTC 00:00)
-    - cron: '0 2 * * *'    # 한국 11:00 (UTC 02:00)
-    - cron: '0 4 * * *'    # 한국 13:00 (UTC 04:00)
+   # - cron: '0 0 * * *'    # 한국 09:00 (UTC 00:00)
+   # - cron: '0 2 * * *'    # 한국 11:00 (UTC 02:00)
+   # - cron: '0 4 * * *'    # 한국 13:00 (UTC 04:00)
   workflow_dispatch:  # 수동 실행 버튼 (테스트용)
 
 permissions:
