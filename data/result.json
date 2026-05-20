@@ -1,58 +1,58 @@
 {
-  "generated_at": "2026-05-19T00:00:43.517862+00:00",
-  "target_date": "2026-05-18",
+  "generated_at": "2026-05-20T00:00:41.457157+00:00",
+  "target_date": "2026-05-19",
   "current_state": {
-    "ndx_close": 28994.37,
-    "vix": 17.82,
-    "tnx": 4.62,
-    "tnx_1y_ago": 4.44,
+    "ndx_close": 28818.84,
+    "vix": 18.06,
+    "tnx": 4.67,
+    "tnx_1y_ago": 4.47,
     "tnx_2y_ago": 4.42,
-    "tnx_5y_ago": 1.68,
-    "tnx_1y_high": 4.62,
+    "tnx_5y_ago": 1.63,
+    "tnx_1y_high": 4.67,
     "tnx_1y_low": 3.95,
-    "tnx_diff_1y": 0.18,
+    "tnx_diff_1y": 0.19,
     "tnx_trend": "보합",
-    "rsi14": 75.61,
-    "bb_pctb": 72.4,
+    "rsi14": 71.17,
+    "bb_pctb": 66.18,
     "ma_align": 1
   },
   "analysis": {
-    "data_period": "2000-12-29 ~ 2026-05-18",
-    "total_days": 6382,
+    "data_period": "2000-12-29 ~ 2026-05-19",
+    "total_days": 6383,
     "n_neighbors": 200,
     "n_features": 21,
     "distance_range": [
-      2.35,
-      5.22
+      2.32,
+      5.17
     ]
   },
   "horizons": [
     {
       "horizon_days": 1,
       "horizon_label": "1일 후",
-      "up_probability": 58.5,
-      "up_count": 117,
-      "total_count": 200,
+      "up_probability": 53.8,
+      "up_count": 107,
+      "total_count": 199,
+      "direction_label": "중립",
+      "direction_icon": "→",
+      "direction_color": "neutral"
+    },
+    {
+      "horizon_days": 5,
+      "horizon_label": "5일 후 (1주)",
+      "up_probability": 59.3,
+      "up_count": 118,
+      "total_count": 199,
       "direction_label": "약한 상승",
       "direction_icon": "↗",
       "direction_color": "weak-up"
     },
     {
-      "horizon_days": 5,
-      "horizon_label": "5일 후 (1주)",
-      "up_probability": 61.0,
-      "up_count": 122,
-      "total_count": 200,
-      "direction_label": "상승 우세",
-      "direction_icon": "📈",
-      "direction_color": "strong-up"
-    },
-    {
       "horizon_days": 20,
       "horizon_label": "20일 후 (1달)",
-      "up_probability": 63.5,
+      "up_probability": 63.8,
       "up_count": 127,
-      "total_count": 200,
+      "total_count": 199,
       "direction_label": "상승 우세",
       "direction_icon": "📈",
       "direction_color": "strong-up"
@@ -61,7 +61,7 @@
   "top_similar_dates": [
     {
       "date": "2004-11-26",
-      "distance": 2.35,
+      "distance": 2.32,
       "close": 1578.26,
       "vix": 12.78,
       "ret_1d": 0.14,
@@ -70,7 +70,7 @@
     },
     {
       "date": "2006-11-24",
-      "distance": 2.91,
+      "distance": 3.07,
       "close": 1815.53,
       "vix": 10.73,
       "ret_1d": -2.22,
@@ -78,8 +78,17 @@
       "ret_20d": -3.69
     },
     {
+      "date": "2005-12-12",
+      "distance": 3.14,
+      "close": 1698.35,
+      "vix": 11.47,
+      "ret_1d": 0.44,
+      "ret_5d": -2.0,
+      "ret_20d": 3.53
+    },
+    {
       "date": "2005-11-25",
-      "distance": 2.95,
+      "distance": 3.22,
       "close": 1701.05,
       "vix": 10.88,
       "ret_1d": -0.98,
@@ -88,7 +97,7 @@
     },
     {
       "date": "2005-11-22",
-      "distance": 3.1,
+      "distance": 3.37,
       "close": 1694.14,
       "vix": 10.6,
       "ret_1d": 0.16,
@@ -96,17 +105,8 @@
       "ret_20d": -1.39
     },
     {
-      "date": "2005-12-12",
-      "distance": 3.45,
-      "close": 1698.35,
-      "vix": 11.47,
-      "ret_1d": 0.44,
-      "ret_5d": -2.0,
-      "ret_20d": 3.53
-    },
-    {
       "date": "2019-11-29",
-      "distance": 3.61,
+      "distance": 3.53,
       "close": 8403.68,
       "vix": 12.62,
       "ret_1d": -1.12,
@@ -115,7 +115,7 @@
     },
     {
       "date": "2023-07-03",
-      "distance": 3.72,
+      "distance": 3.59,
       "close": 15208.69,
       "vix": 13.57,
       "ret_1d": -0.03,
@@ -124,7 +124,7 @@
     },
     {
       "date": "2010-12-27",
-      "distance": 3.73,
+      "distance": 3.64,
       "close": 2229.86,
       "vix": 17.67,
       "ret_1d": -0.11,
@@ -132,22 +132,22 @@
       "ret_20d": 3.33
     },
     {
-      "date": "2023-11-24",
-      "distance": 3.85,
-      "close": 15982.01,
-      "vix": 12.46,
-      "ret_1d": -0.13,
-      "ret_5d": 0.1,
-      "ret_20d": 4.98
+      "date": "2017-11-24",
+      "distance": 3.92,
+      "close": 6409.29,
+      "vix": 9.67,
+      "ret_1d": -0.05,
+      "ret_5d": -1.11,
+      "ret_20d": 0.87
     },
     {
-      "date": "2014-07-03",
-      "distance": 3.89,
-      "close": 3923.01,
-      "vix": 10.32,
-      "ret_1d": -0.31,
-      "ret_5d": -0.47,
-      "ret_20d": -1.1
+      "date": "2019-12-24",
+      "distance": 3.98,
+      "close": 8699.51,
+      "vix": 12.67,
+      "ret_1d": 0.91,
+      "ret_5d": 1.99,
+      "ret_20d": 5.08
     }
   ]
 }
