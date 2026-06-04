@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-06-03T00:00:43.853440+00:00",
-  "target_date": "2026-06-02",
+  "generated_at": "2026-06-04T00:00:43.064134+00:00",
+  "target_date": "2026-06-03",
   "current": {
-    "close": 266.32,
-    "rsi": 78.43,
-    "rsi_prev": 71.98,
-    "rsi_change": 6.44
+    "close": 280.54,
+    "rsi": 80.2,
+    "rsi_prev": 78.43,
+    "rsi_change": 1.77
   },
   "signal": {
     "label": "강한 매도",
@@ -20,15 +20,10 @@
     "days_below_45": 24,
     "days_below_35": 1,
     "days_below_30": 0,
-    "days_above_70": 60,
-    "days_above_75": 18
+    "days_above_70": 61,
+    "days_above_75": 19
   },
   "recent_30d": [
-    {
-      "date": "2026-04-21",
-      "close": 98.09,
-      "rsi": 79.97
-    },
     {
       "date": "2026-04-22",
       "close": 105.64,
@@ -173,6 +168,11 @@
       "date": "2026-06-02",
       "close": 266.32,
       "rsi": 78.43
+    },
+    {
+      "date": "2026-06-03",
+      "close": 280.54,
+      "rsi": 80.2
     }
   ]
 }
