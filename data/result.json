@@ -1,47 +1,47 @@
 {
-  "generated_at": "2026-06-05T00:00:42.442298+00:00",
-  "target_date": "2026-06-04",
+  "generated_at": "2026-06-06T11:47:54.086602+00:00",
+  "target_date": "2026-06-05",
   "current_state": {
-    "ndx_close": 30407.81,
-    "vix": 15.4,
-    "tnx": 4.48,
-    "tnx_1y_ago": 4.36,
-    "tnx_2y_ago": 4.34,
+    "ndx_close": 28957.6,
+    "vix": 21.51,
+    "tnx": 4.54,
+    "tnx_1y_ago": 4.39,
+    "tnx_2y_ago": 4.29,
     "tnx_5y_ago": 1.56,
     "tnx_1y_high": 4.67,
     "tnx_1y_low": 3.95,
-    "tnx_diff_1y": 0.11,
+    "tnx_diff_1y": 0.14,
     "tnx_trend": "보합",
-    "rsi14": 64.21,
-    "bb_pctb": 79.9,
+    "rsi14": 47.85,
+    "bb_pctb": 20.96,
     "ma_align": 1
   },
   "analysis": {
-    "data_period": "2000-12-29 ~ 2026-06-04",
-    "total_days": 6394,
+    "data_period": "2000-12-29 ~ 2026-06-05",
+    "total_days": 6395,
     "n_neighbors": 200,
     "n_features": 21,
     "distance_range": [
-      2.9,
-      4.96
+      2.16,
+      3.87
     ]
   },
   "horizons": [
     {
       "horizon_days": 1,
       "horizon_label": "1일 후",
-      "up_probability": 55.5,
-      "up_count": 111,
+      "up_probability": 52.0,
+      "up_count": 104,
       "total_count": 200,
-      "direction_label": "약한 상승",
-      "direction_icon": "↗",
-      "direction_color": "weak-up"
+      "direction_label": "중립",
+      "direction_icon": "→",
+      "direction_color": "neutral"
     },
     {
       "horizon_days": 5,
       "horizon_label": "5일 후 (1주)",
-      "up_probability": 58.5,
-      "up_count": 117,
+      "up_probability": 59.0,
+      "up_count": 118,
       "total_count": 200,
       "direction_label": "약한 상승",
       "direction_icon": "↗",
@@ -50,104 +50,104 @@
     {
       "horizon_days": 20,
       "horizon_label": "20일 후 (1달)",
-      "up_probability": 57.0,
-      "up_count": 114,
+      "up_probability": 61.0,
+      "up_count": 122,
       "total_count": 200,
-      "direction_label": "약한 상승",
-      "direction_icon": "↗",
-      "direction_color": "weak-up"
+      "direction_label": "상승 우세",
+      "direction_icon": "📈",
+      "direction_color": "strong-up"
     }
   ],
   "top_similar_dates": [
     {
-      "date": "2023-07-03",
-      "distance": 2.9,
-      "close": 15208.69,
-      "vix": 13.57,
-      "ret_1d": -0.03,
-      "ret_5d": -0.59,
-      "ret_20d": 3.35
+      "date": "2024-07-17",
+      "distance": 2.16,
+      "close": 19799.14,
+      "vix": 14.48,
+      "ret_1d": -0.48,
+      "ret_5d": -3.87,
+      "ret_20d": -3.92
     },
     {
-      "date": "2004-11-26",
-      "distance": 2.93,
-      "close": 1578.26,
-      "vix": 12.78,
-      "ret_1d": 0.14,
-      "ret_5d": 2.29,
-      "ret_20d": 1.86
+      "date": "2025-10-10",
+      "distance": 2.31,
+      "close": 24221.74,
+      "vix": 21.66,
+      "ret_1d": 2.18,
+      "ret_5d": 2.46,
+      "ret_20d": 3.46
     },
     {
-      "date": "2005-12-12",
-      "distance": 3.0,
-      "close": 1698.35,
-      "vix": 11.47,
-      "ret_1d": 0.44,
-      "ret_5d": -2.0,
-      "ret_20d": 3.53
+      "date": "2011-02-22",
+      "distance": 2.41,
+      "close": 2322.86,
+      "vix": 20.8,
+      "ret_1d": -0.94,
+      "ret_5d": -0.33,
+      "ret_20d": -2.79
     },
     {
-      "date": "2013-12-24",
-      "distance": 3.03,
-      "close": 3572.8,
-      "vix": 12.48,
-      "ret_1d": 0.33,
-      "ret_5d": -0.26,
-      "ret_20d": -0.88
+      "date": "2012-04-10",
+      "distance": 2.54,
+      "close": 2695.12,
+      "vix": 20.39,
+      "ret_1d": 0.48,
+      "ret_5d": 1.06,
+      "ret_20d": -2.42
     },
     {
-      "date": "2017-11-24",
-      "distance": 3.08,
-      "close": 6409.29,
-      "vix": 9.67,
-      "ret_1d": -0.05,
-      "ret_5d": -1.11,
-      "ret_20d": 0.87
+      "date": "2023-08-02",
+      "distance": 2.58,
+      "close": 15370.74,
+      "vix": 16.09,
+      "ret_1d": -0.11,
+      "ret_5d": -1.75,
+      "ret_20d": 0.6
     },
     {
-      "date": "2006-11-24",
-      "distance": 3.17,
-      "close": 1815.53,
-      "vix": 10.73,
-      "ret_1d": -2.22,
-      "ret_5d": -2.23,
-      "ret_20d": -3.69
+      "date": "2010-04-30",
+      "distance": 2.64,
+      "close": 2000.63,
+      "vix": 22.05,
+      "ret_1d": 1.55,
+      "ret_5d": -7.56,
+      "ret_20d": -7.41
     },
     {
-      "date": "2003-12-26",
-      "distance": 3.21,
-      "close": 1443.86,
-      "vix": 17.45,
-      "ret_1d": 1.84,
-      "ret_5d": 3.65,
-      "ret_20d": 5.22
+      "date": "2011-01-28",
+      "distance": 2.71,
+      "close": 2270.51,
+      "vix": 20.04,
+      "ret_1d": 0.5,
+      "ret_5d": 2.98,
+      "ret_20d": 3.54
     },
     {
-      "date": "2013-11-29",
-      "distance": 3.27,
-      "close": 3487.82,
-      "vix": 13.7,
-      "ret_1d": -0.19,
-      "ret_5d": 0.47,
-      "ret_20d": 2.36
+      "date": "2010-11-16",
+      "distance": 2.73,
+      "close": 2093.63,
+      "vix": 22.58,
+      "ret_1d": 0.3,
+      "ret_5d": 1.1,
+      "ret_20d": 5.2
     },
     {
-      "date": "2019-12-24",
-      "distance": 3.3,
-      "close": 8699.51,
-      "vix": 12.67,
-      "ret_1d": 0.91,
-      "ret_5d": 1.99,
-      "ret_20d": 5.08
+      "date": "2003-09-24",
+      "distance": 2.74,
+      "close": 1339.64,
+      "vix": 21.22,
+      "ret_1d": -1.04,
+      "ret_5d": -0.32,
+      "ret_20d": 3.57
     },
     {
-      "date": "2003-07-03",
-      "distance": 3.32,
-      "close": 1231.34,
-      "vix": 19.39,
-      "ret_1d": 4.11,
-      "ret_5d": 4.0,
-      "ret_20d": 2.68
+      "date": "2006-01-20",
+      "distance": 2.75,
+      "close": 1676.38,
+      "vix": 14.56,
+      "ret_1d": -0.0,
+      "ret_5d": 2.07,
+      "ret_20d": -0.07
     }
   ]
 }

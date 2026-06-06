@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-06-05T00:00:42.680239+00:00",
-  "target_date": "2026-06-04",
+  "generated_at": "2026-06-06T11:47:54.297091+00:00",
+  "target_date": "2026-06-05",
   "current": {
-    "close": 262.7,
-    "rsi": 72.18,
-    "rsi_prev": 80.2,
-    "rsi_change": -8.02
+    "close": 182.54,
+    "rsi": 48.64,
+    "rsi_prev": 72.18,
+    "rsi_change": -23.54
   },
   "signal": {
-    "label": "매도",
-    "color": "sell",
-    "icon": "🔴",
-    "action": "RSI ≥ 70: 1차 매도 구간 (50% 매도)",
-    "tier": -1
+    "label": "관망",
+    "color": "neutral",
+    "icon": "⚪",
+    "action": "RSI 45~70 구간: 진입/청산 신호 없음",
+    "tier": 0
   },
   "stats_1y": {
     "rsi_max": 88.45,
@@ -24,11 +24,6 @@
     "days_above_75": 19
   },
   "recent_30d": [
-    {
-      "date": "2026-04-23",
-      "close": 112.77,
-      "rsi": 85.01
-    },
     {
       "date": "2026-04-24",
       "close": 128.32,
@@ -173,6 +168,11 @@
       "date": "2026-06-04",
       "close": 262.7,
       "rsi": 72.18
+    },
+    {
+      "date": "2026-06-05",
+      "close": 182.54,
+      "rsi": 48.64
     }
   ]
 }
