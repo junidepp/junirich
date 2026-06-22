@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-06-21T00:00:57.896224+00:00",
+  "generated_at": "2026-06-22T00:00:55.276320+00:00",
   "target_date": "2026-06-18",
   "current_state": {
     "ndx_close": 30406.19,
     "vix": 16.4,
-    "tnx": 4.49,
+    "tnx": 4.45,
     "tnx_1y_ago": 4.4,
     "tnx_2y_ago": 4.22,
     "tnx_5y_ago": 1.45,
     "tnx_1y_high": 4.67,
     "tnx_1y_low": 3.95,
-    "tnx_diff_1y": 0.09,
+    "tnx_diff_1y": 0.05,
     "tnx_trend": "보합",
     "rsi14": 50.52,
     "bb_pctb": 72.36,
@@ -30,8 +30,8 @@
     {
       "horizon_days": 1,
       "horizon_label": "1일 후",
-      "up_probability": 51.5,
-      "up_count": 103,
+      "up_probability": 51.0,
+      "up_count": 102,
       "total_count": 200,
       "direction_label": "중립",
       "direction_icon": "→",
@@ -40,8 +40,8 @@
     {
       "horizon_days": 5,
       "horizon_label": "5일 후 (1주)",
-      "up_probability": 58.0,
-      "up_count": 116,
+      "up_probability": 57.5,
+      "up_count": 115,
       "total_count": 200,
       "direction_label": "약한 상승",
       "direction_icon": "↗",
@@ -70,7 +70,7 @@
     },
     {
       "date": "2013-12-20",
-      "distance": 3.38,
+      "distance": 3.39,
       "close": 3531.19,
       "vix": 13.79,
       "ret_1d": 1.08,
@@ -79,7 +79,7 @@
     },
     {
       "date": "2009-06-26",
-      "distance": 3.45,
+      "distance": 3.46,
       "close": 1480.2,
       "vix": 25.93,
       "ret_1d": 0.25,
@@ -88,7 +88,7 @@
     },
     {
       "date": "2025-06-12",
-      "distance": 3.55,
+      "distance": 3.54,
       "close": 21913.32,
       "vix": 18.02,
       "ret_1d": -1.29,
@@ -97,7 +97,7 @@
     },
     {
       "date": "2024-11-07",
-      "distance": 3.56,
+      "distance": 3.58,
       "close": 21101.57,
       "vix": 15.2,
       "ret_1d": 0.07,
@@ -115,7 +115,7 @@
     },
     {
       "date": "2014-12-19",
-      "distance": 3.69,
+      "distance": 3.68,
       "close": 4281.78,
       "vix": 16.49,
       "ret_1d": 0.28,
@@ -133,7 +133,7 @@
     },
     {
       "date": "2003-06-06",
-      "distance": 3.75,
+      "distance": 3.73,
       "close": 1213.11,
       "vix": 21.25,
       "ret_1d": -1.45,
@@ -141,13 +141,13 @@
       "ret_20d": 5.67
     },
     {
-      "date": "2004-01-05",
+      "date": "2003-06-04",
       "distance": 3.77,
-      "close": 1496.58,
-      "vix": 17.49,
-      "ret_1d": 0.31,
-      "ret_5d": 2.89,
-      "ret_20d": -0.32
+      "close": 1224.76,
+      "vix": 20.62,
+      "ret_1d": 0.57,
+      "ret_5d": 0.28,
+      "ret_20d": 1.71
     }
   ]
 }
