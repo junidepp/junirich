@@ -1,37 +1,37 @@
 {
-  "generated_at": "2026-07-15T00:01:21.181785+00:00",
-  "target_date": "2026-07-14",
+  "generated_at": "2026-07-16T00:01:13.835888+00:00",
+  "target_date": "2026-07-15",
   "current_state": {
-    "ndx_close": 29586.29,
-    "vix": 16.5,
-    "tnx": 4.59,
-    "tnx_1y_ago": 4.43,
-    "tnx_2y_ago": 4.19,
+    "ndx_close": 29502.6,
+    "vix": 15.67,
+    "tnx": 4.55,
+    "tnx_1y_ago": 4.49,
+    "tnx_2y_ago": 4.23,
     "tnx_5y_ago": 1.3,
     "tnx_1y_high": 4.67,
     "tnx_1y_low": 3.95,
-    "tnx_diff_1y": 0.16,
+    "tnx_diff_1y": 0.06,
     "tnx_trend": "보합",
-    "rsi14": 52.3,
-    "bb_pctb": 44.14,
+    "rsi14": 52.74,
+    "bb_pctb": 41.4,
     "ma_align": 0
   },
   "analysis": {
-    "data_period": "2000-12-29 ~ 2026-07-14",
-    "total_days": 6420,
+    "data_period": "2000-12-29 ~ 2026-07-15",
+    "total_days": 6421,
     "n_neighbors": 200,
     "n_features": 21,
     "distance_range": [
-      2.3,
-      4.93
+      2.28,
+      4.81
     ]
   },
   "horizons": [
     {
       "horizon_days": 1,
       "horizon_label": "1일 후",
-      "up_probability": 49.0,
-      "up_count": 98,
+      "up_probability": 52.0,
+      "up_count": 104,
       "total_count": 200,
       "direction_label": "중립",
       "direction_icon": "→",
@@ -40,8 +40,8 @@
     {
       "horizon_days": 5,
       "horizon_label": "5일 후 (1주)",
-      "up_probability": 62.0,
-      "up_count": 124,
+      "up_probability": 65.0,
+      "up_count": 130,
       "total_count": 200,
       "direction_label": "상승 우세",
       "direction_icon": "📈",
@@ -50,8 +50,8 @@
     {
       "horizon_days": 20,
       "horizon_label": "20일 후 (1달)",
-      "up_probability": 63.5,
-      "up_count": 127,
+      "up_probability": 65.5,
+      "up_count": 131,
       "total_count": 200,
       "direction_label": "상승 우세",
       "direction_icon": "📈",
@@ -61,7 +61,7 @@
   "top_similar_dates": [
     {
       "date": "2010-11-26",
-      "distance": 2.3,
+      "distance": 2.28,
       "close": 2153.91,
       "vix": 22.22,
       "ret_1d": -0.43,
@@ -70,7 +70,7 @@
     },
     {
       "date": "2015-12-24",
-      "distance": 2.63,
+      "distance": 2.54,
       "close": 4622.77,
       "vix": 15.74,
       "ret_1d": -0.03,
@@ -78,8 +78,17 @@
       "ret_20d": -8.41
     },
     {
+      "date": "2012-12-24",
+      "distance": 2.77,
+      "close": 2658.05,
+      "vix": 17.84,
+      "ret_1d": -0.79,
+      "ret_5d": 3.33,
+      "ret_20d": 2.46
+    },
+    {
       "date": "2003-11-28",
-      "distance": 2.72,
+      "distance": 2.78,
       "close": 1424.25,
       "vix": 16.32,
       "ret_1d": 1.6,
@@ -88,7 +97,7 @@
     },
     {
       "date": "2015-04-10",
-      "distance": 2.97,
+      "distance": 3.06,
       "close": 4422.02,
       "vix": 12.58,
       "ret_1d": -0.29,
@@ -96,26 +105,8 @@
       "ret_20d": 0.83
     },
     {
-      "date": "2012-12-24",
-      "distance": 3.1,
-      "close": 2658.05,
-      "vix": 17.84,
-      "ret_1d": -0.79,
-      "ret_5d": 3.33,
-      "ret_20d": 2.46
-    },
-    {
-      "date": "2005-12-12",
-      "distance": 3.12,
-      "close": 1698.35,
-      "vix": 11.47,
-      "ret_1d": 0.44,
-      "ret_5d": -2.0,
-      "ret_20d": 3.53
-    },
-    {
       "date": "2014-12-24",
-      "distance": 3.12,
+      "distance": 3.13,
       "close": 4283.1,
       "vix": 14.37,
       "ret_1d": 0.72,
@@ -132,22 +123,31 @@
       "ret_20d": 7.51
     },
     {
-      "date": "2025-11-28",
-      "distance": 3.33,
-      "close": 25434.89,
-      "vix": 16.35,
-      "ret_1d": -0.36,
-      "ret_5d": 1.01,
-      "ret_20d": 0.36
+      "date": "2005-12-12",
+      "distance": 3.26,
+      "close": 1698.35,
+      "vix": 11.47,
+      "ret_1d": 0.44,
+      "ret_5d": -2.0,
+      "ret_20d": 3.53
     },
     {
-      "date": "2007-12-24",
+      "date": "2005-12-23",
+      "distance": 3.32,
+      "close": 1682.92,
+      "vix": 10.27,
+      "ret_1d": -0.86,
+      "ret_5d": -0.18,
+      "ret_20d": -0.35
+    },
+    {
+      "date": "2015-11-27",
       "distance": 3.4,
-      "close": 2128.62,
-      "vix": 18.6,
-      "ret_1d": 0.39,
-      "ret_5d": -3.71,
-      "ret_20d": -14.17
+      "close": 4680.47,
+      "vix": 15.12,
+      "ret_1d": -0.34,
+      "ret_5d": 0.76,
+      "ret_20d": -1.26
     }
   ]
 }
