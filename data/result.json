@@ -1,38 +1,38 @@
 {
-  "generated_at": "2026-07-22T00:00:53.353324+00:00",
-  "target_date": "2026-07-21",
+  "generated_at": "2026-07-23T00:00:53.907022+00:00",
+  "target_date": "2026-07-22",
   "current_state": {
-    "ndx_close": 29155.18,
-    "vix": 17.05,
-    "tnx": 4.63,
-    "tnx_1y_ago": 4.37,
-    "tnx_2y_ago": 4.24,
-    "tnx_5y_ago": 1.26,
+    "ndx_close": 28998.1,
+    "vix": 16.64,
+    "tnx": 4.66,
+    "tnx_1y_ago": 4.34,
+    "tnx_2y_ago": 4.26,
+    "tnx_5y_ago": 1.29,
     "tnx_1y_high": 4.67,
     "tnx_1y_low": 3.95,
-    "tnx_diff_1y": 0.26,
+    "tnx_diff_1y": 0.32,
     "tnx_trend": "보합",
-    "rsi14": 38.63,
-    "bb_pctb": 35.91,
+    "rsi14": 41.23,
+    "bb_pctb": 27.89,
     "ma_align": 0
   },
   "analysis": {
-    "data_period": "2000-12-29 ~ 2026-07-21",
-    "total_days": 6425,
+    "data_period": "2000-12-29 ~ 2026-07-22",
+    "total_days": 6426,
     "n_neighbors": 200,
     "n_features": 21,
     "distance_range": [
-      2.73,
-      4.88
+      2.42,
+      4.73
     ]
   },
   "horizons": [
     {
       "horizon_days": 1,
       "horizon_label": "1일 후",
-      "up_probability": 50.8,
-      "up_count": 101,
-      "total_count": 199,
+      "up_probability": 51.0,
+      "up_count": 102,
+      "total_count": 200,
       "direction_label": "중립",
       "direction_icon": "→",
       "direction_color": "neutral"
@@ -40,9 +40,9 @@
     {
       "horizon_days": 5,
       "horizon_label": "5일 후 (1주)",
-      "up_probability": 63.8,
-      "up_count": 127,
-      "total_count": 199,
+      "up_probability": 64.0,
+      "up_count": 128,
+      "total_count": 200,
       "direction_label": "상승 우세",
       "direction_icon": "📈",
       "direction_color": "strong-up"
@@ -50,9 +50,9 @@
     {
       "horizon_days": 20,
       "horizon_label": "20일 후 (1달)",
-      "up_probability": 68.8,
-      "up_count": 137,
-      "total_count": 199,
+      "up_probability": 69.5,
+      "up_count": 139,
+      "total_count": 200,
       "direction_label": "상승 우세",
       "direction_icon": "📈",
       "direction_color": "strong-up"
@@ -60,8 +60,17 @@
   ],
   "top_similar_dates": [
     {
+      "date": "2012-12-24",
+      "distance": 2.42,
+      "close": 2658.05,
+      "vix": 17.84,
+      "ret_1d": -0.79,
+      "ret_5d": 3.33,
+      "ret_20d": 2.46
+    },
+    {
       "date": "2015-12-24",
-      "distance": 2.73,
+      "distance": 2.45,
       "close": 4622.77,
       "vix": 15.74,
       "ret_1d": -0.03,
@@ -70,7 +79,7 @@
     },
     {
       "date": "2010-11-26",
-      "distance": 2.78,
+      "distance": 2.52,
       "close": 2153.91,
       "vix": 22.22,
       "ret_1d": -0.43,
@@ -78,8 +87,26 @@
       "ret_20d": 3.53
     },
     {
+      "date": "2017-07-03",
+      "distance": 2.87,
+      "close": 5596.96,
+      "vix": 11.22,
+      "ret_1d": 0.93,
+      "ret_5d": 2.02,
+      "ret_20d": 5.33
+    },
+    {
+      "date": "2018-07-03",
+      "distance": 3.05,
+      "close": 7014.55,
+      "vix": 16.14,
+      "ret_1d": 1.23,
+      "ret_5d": 3.27,
+      "ret_20d": 3.68
+    },
+    {
       "date": "2012-05-29",
-      "distance": 3.0,
+      "distance": 3.11,
       "close": 2558.97,
       "vix": 21.03,
       "ret_1d": -0.84,
@@ -87,53 +114,8 @@
       "ret_20d": -0.36
     },
     {
-      "date": "2012-12-24",
-      "distance": 3.05,
-      "close": 2658.05,
-      "vix": 17.84,
-      "ret_1d": -0.79,
-      "ret_5d": 3.33,
-      "ret_20d": 2.46
-    },
-    {
-      "date": "2007-11-23",
-      "distance": 3.2,
-      "close": 2028.9,
-      "vix": 25.61,
-      "ret_1d": -1.95,
-      "ret_5d": 2.97,
-      "ret_20d": 4.08
-    },
-    {
-      "date": "2003-11-28",
-      "distance": 3.44,
-      "close": 1424.25,
-      "vix": 16.32,
-      "ret_1d": 1.6,
-      "ret_5d": -1.22,
-      "ret_20d": 3.24
-    },
-    {
-      "date": "2015-04-10",
-      "distance": 3.51,
-      "close": 4422.02,
-      "vix": 12.58,
-      "ret_1d": -0.29,
-      "ret_5d": -1.59,
-      "ret_20d": 0.83
-    },
-    {
-      "date": "2013-08-22",
-      "distance": 3.53,
-      "close": 3101.82,
-      "vix": 14.76,
-      "ret_1d": 0.72,
-      "ret_5d": -0.27,
-      "ret_20d": 3.96
-    },
-    {
       "date": "2006-12-26",
-      "distance": 3.53,
+      "distance": 3.16,
       "close": 1753.55,
       "vix": 11.26,
       "ret_1d": 0.56,
@@ -142,12 +124,30 @@
     },
     {
       "date": "2005-12-23",
-      "distance": 3.54,
+      "distance": 3.28,
       "close": 1682.92,
       "vix": 10.27,
       "ret_1d": -0.86,
       "ret_5d": -0.18,
       "ret_20d": -0.35
+    },
+    {
+      "date": "2007-11-23",
+      "distance": 3.34,
+      "close": 2028.9,
+      "vix": 25.61,
+      "ret_1d": -1.95,
+      "ret_5d": 2.97,
+      "ret_20d": 4.08
+    },
+    {
+      "date": "2005-12-12",
+      "distance": 3.39,
+      "close": 1698.35,
+      "vix": 11.47,
+      "ret_1d": 0.44,
+      "ret_5d": -2.0,
+      "ret_20d": 3.53
     }
   ]
 }
