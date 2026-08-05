@@ -19,6 +19,11 @@ N_NEIGHBORS = 200
 HORIZONS = [1, 5, 20]
 DATA_DIR = "data"
 
+# 경로 시나리오(팬차트) 설정
+PROJ_DAYS = 60              # 미래 60거래일 (약 3개월)
+PROJ_HIST_DAYS = 60         # 과거 60거래일도 함께 표시
+PROJ_PCTS = [10, 20, 50, 80, 90]   # 밴드 10~90, 선 20/50/80
+
 os.makedirs(DATA_DIR, exist_ok=True)
 
 
@@ -156,6 +161,85 @@ def get_direction_label(up_pct):
         return {"label": "하락 우세", "icon": "📉", "color": "strong-down"}
 
 
+def build_projection(df, neighbors, target_idx):
+    """
+    유사 시점들의 '이후 실제 경로'를 모아 백분위 팬차트 데이터를 만든다.
+
+    주의: 이것은 예측이 아니라 '과거 유사 국면에서 실제로 나타났던 경로의 분포'다.
+    방향 예측력은 백테스트에서 유의하지 않았고(적중률 53.9% vs 베이스라인 55.5%),
+    캘리브레이션(분포 폭)만 비교적 신뢰할 만하다는 결과에 근거한 표현 방식이다.
+    """
+    close = df['close'].values
+    pos = {d: i for i, d in enumerate(df.index)}
+    n = len(close)
+    t_pos = pos[target_idx]
+
+    # 각 유사 시점의 이후 PROJ_DAYS 경로(% 변화) 수집
+    paths = []
+    for date in neighbors.index:
+        i = pos.get(date)
+        if i is None:
+            continue
+        if i + PROJ_DAYS >= n:      # 미래 데이터가 모자란 시점은 제외
+            continue
+        base = close[i]
+        if not np.isfinite(base) or base <= 0:
+            continue
+        seg = (close[i + 1: i + 1 + PROJ_DAYS] / base - 1.0) * 100
+        if len(seg) == PROJ_DAYS and np.isfinite(seg).all():
+            paths.append(seg)
+
+    if len(paths) < 20:
+        print(f"  ⚠️ 경로 시나리오 생성 불가 (유효 경로 {len(paths)}개)")
+        return None
+
+    arr = np.array(paths)                   # (n_paths, PROJ_DAYS)
+    print(f"  → 경로 시나리오: {len(paths)}개 경로 × {PROJ_DAYS}거래일")
+
+    # 미래 구간 백분위
+    future = []
+    for t in range(PROJ_DAYS):
+        col = arr[:, t]
+        row = {"d": t + 1}
+        for p in PROJ_PCTS:
+            row[f"p{p}"] = round(float(np.percentile(col, p)), 2)
+        future.append(row)
+
+    # 과거 실제 경로 (기준일을 d=0으로)
+    hist_start = max(0, t_pos - PROJ_HIST_DAYS + 1)
+    history = []
+    for i in range(hist_start, t_pos + 1):
+        history.append({
+            "d": i - t_pos,
+            "close": round(float(close[i]), 2)
+        })
+
+    # 20 / 40 / 60거래일 요약
+    base_close = float(close[t_pos])
+    marks = {}
+    for mark in (20, 40, 60):
+        if mark > PROJ_DAYS:
+            continue
+        col = arr[:, mark - 1]
+        entry = {}
+        for p in (20, 50, 80):
+            pct = float(np.percentile(col, p))
+            entry[f"p{p}"] = round(pct, 2)
+            entry[f"p{p}_price"] = round(base_close * (1 + pct / 100), 2)
+        entry["up_ratio"] = round(float((col > 0).mean()) * 100, 1)
+        marks[f"d{mark}"] = entry
+
+    return {
+        "horizon_days": PROJ_DAYS,
+        "n_paths": len(paths),
+        "base_close": round(base_close, 2),
+        "percentiles": PROJ_PCTS,
+        "history": history,
+        "future": future,
+        "marks": marks
+    }
+
+
 def analyze():
     """전체 분석 실행"""
     df = download_data()
@@ -179,6 +263,9 @@ def analyze():
     neighbors = find_neighbors(features_norm, target_idx, N_NEIGHBORS)
     neighbor_rets = future_rets.loc[neighbors.index].dropna()
     print(f"  → {len(neighbor_rets)}개 검색됨, 거리 {neighbors['distance'].min():.2f}~{neighbors['distance'].max():.2f}")
+
+    # 경로 시나리오 (팬차트)
+    projection = build_projection(df, neighbors, target_idx)
     
     # 결과 정리
     horizons_result = []
@@ -277,7 +364,8 @@ def analyze():
             ]
         },
         "horizons": horizons_result,
-        "top_similar_dates": top10
+        "top_similar_dates": top10,
+        "projection": projection
     }
     
     # JSON 저장
