@@ -11,6 +11,7 @@ import pandas as pd
 import numpy as np
 import json
 import os
+import time
 from datetime import datetime, timezone
 
 # ===== 설정 =====
@@ -18,6 +19,13 @@ START_DATE = "2000-01-01"
 N_NEIGHBORS = 200
 HORIZONS = [1, 5, 20]
 DATA_DIR = "data"
+
+# 다운로드 안정성 설정
+DOWNLOAD_RETRY = 4      # 티커당 재시도 횟수
+RETRY_WAIT = 15         # 재시도 대기(초), 시도마다 배수 증가
+MIN_ROWS_MAIN = 3000    # NDX/VIX 최소 행 수 (2000년~이면 6000+ 정상)
+MIN_ROWS_TNX = 3000     # 10Y 금리 최소 행 수
+MIN_FEATURE_ROWS = 500  # 피처 생성 후 최소 행 수
 
 # 경로 시나리오(팬차트) 설정
 PROJ_DAYS = 60              # 미래 60거래일 (약 3개월)
@@ -27,26 +35,111 @@ PROJ_PCTS = [10, 20, 50, 80, 90]   # 밴드 10~90, 선 20/50/80
 os.makedirs(DATA_DIR, exist_ok=True)
 
 
+def _fetch_yf(ticker, min_rows, start=START_DATE, auto_adjust=False):
+    """
+    yfinance 단일 티커 다운로드 + 재시도.
+
+    야후는 에러 없이 '일부만 잘린 데이터'를 주는 경우가 있어서
+    (예: ^TNX가 14일치만 반환) 행 수 검증을 반드시 거친다.
+    start= 방식이 실패하면 period='max' 방식으로도 시도한다.
+    """
+    last_err = None
+
+    for attempt in range(1, DOWNLOAD_RETRY + 1):
+        for mode in ("start", "max"):
+            try:
+                if mode == "start":
+                    df = yf.download(ticker, start=start, progress=False,
+                                     auto_adjust=auto_adjust, threads=False)
+                else:
+                    df = yf.download(ticker, period="max", progress=False,
+                                     auto_adjust=auto_adjust, threads=False)
+
+                if df is None or len(df) == 0:
+                    raise Exception("빈 데이터 수신")
+
+                if isinstance(df.columns, pd.MultiIndex):
+                    df.columns = df.columns.get_level_values(0)
+
+                df = df[df.index >= pd.Timestamp(start)]
+                df = df[~df.index.duplicated(keep='last')].sort_index()
+
+                if len(df) < min_rows:
+                    raise Exception(
+                        f"데이터 부족: {len(df)}일 (최소 {min_rows}일 필요)"
+                    )
+
+                if attempt > 1 or mode != "start":
+                    print(f"    ↻ {mode} 방식 {attempt}차 시도로 복구")
+                return df
+
+            except Exception as e:
+                last_err = e
+                print(f"    ⚠️ [{ticker}/{mode}/{attempt}차] {e}")
+
+        if attempt < DOWNLOAD_RETRY:
+            wait = RETRY_WAIT * attempt
+            print(f"    ⏳ {wait}초 대기 후 재시도")
+            time.sleep(wait)
+
+    raise Exception(f"{ticker} 다운로드 실패 (최종): {last_err}")
+
+
+def _fetch_tnx_fred():
+    """
+    야후가 ^TNX를 제대로 안 줄 때의 대체 소스: FRED DGS10 (미국 10년물).
+    API 키 없이 공개 CSV 엔드포인트를 사용한다.
+    """
+    import requests
+    from io import StringIO
+
+    url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10"
+    res = requests.get(url, timeout=30,
+                       headers={"User-Agent": "Mozilla/5.0"})
+    res.raise_for_status()
+
+    raw = pd.read_csv(StringIO(res.text))
+    date_col, val_col = raw.columns[0], raw.columns[1]
+
+    raw[date_col] = pd.to_datetime(raw[date_col], errors='coerce')
+    raw[val_col] = pd.to_numeric(raw[val_col], errors='coerce')  # 휴일은 '.'
+    raw = raw.dropna()
+
+    out = pd.DataFrame({"Close": raw[val_col].values},
+                       index=pd.DatetimeIndex(raw[date_col].values))
+    out = out[out.index >= pd.Timestamp(START_DATE)].sort_index()
+
+    if len(out) < MIN_ROWS_TNX:
+        raise Exception(f"FRED 데이터 부족: {len(out)}일")
+
+    return out
+
+
 def download_data():
-    """yfinance에서 최신 데이터 다운로드"""
+    """NDX / VIX / 10Y 금리 다운로드 (검증 + 재시도 + 대체 소스)"""
     print(f"[1/4] 데이터 다운로드 ({START_DATE} ~ 현재)")
-    
-    tickers = {"^NDX": "ndx", "^VIX": "vix", "^TNX": "tnx"}
+
     data = {}
-    
-    for ticker, name in tickers.items():
+
+    for ticker, name, min_rows in (
+        ("^NDX", "ndx", MIN_ROWS_MAIN),
+        ("^VIX", "vix", MIN_ROWS_MAIN),
+        ("^TNX", "tnx", MIN_ROWS_TNX),
+    ):
         print(f"  - {ticker} 다운로드 중...")
-        df = yf.download(ticker, start=START_DATE, progress=False, auto_adjust=False)
-        
-        if df.empty:
-            raise Exception(f"{ticker} 데이터 다운로드 실패")
-        
-        if isinstance(df.columns, pd.MultiIndex):
-            df.columns = df.columns.get_level_values(0)
-        
+        try:
+            df = _fetch_yf(ticker, min_rows)
+        except Exception as e:
+            # 10Y 금리만 대체 소스 보유
+            if name != "tnx":
+                raise
+            print(f"    ↪ 야후 실패 → FRED(DGS10)로 대체 시도")
+            df = _fetch_tnx_fred()
+            print(f"    ✅ FRED 대체 성공")
+
         data[name] = df
         print(f"    → {len(df):,}일 ({df.index[0].date()} ~ {df.index[-1].date()})")
-    
+
     # 통합 데이터프레임
     df = pd.DataFrame(index=data['ndx'].index)
     df['close'] = data['ndx']['Close']
@@ -56,8 +149,21 @@ def download_data():
     df['volume'] = data['ndx']['Volume']
     df['vix'] = data['vix']['Close'].reindex(df.index, method='ffill')
     df['tnx'] = data['tnx']['Close'].reindex(df.index, method='ffill')
-    
-    return df.dropna()
+
+    merged = df.dropna()
+
+    # 병합 후 급감 감지 (한쪽 데이터가 짧으면 여기서 대량 소실됨)
+    if len(merged) < MIN_ROWS_MAIN:
+        raise Exception(
+            f"병합 후 데이터 부족: {len(merged)}일 "
+            f"(NDX {len(data['ndx']):,} / VIX {len(data['vix']):,} / TNX {len(data['tnx']):,}) "
+            f"— 특정 지표의 이력이 짧아 병합 시 소실됨"
+        )
+
+    print(f"  → 병합 완료: {len(merged):,}일 "
+          f"({merged.index[0].date()} ~ {merged.index[-1].date()})")
+
+    return merged
 
 
 def make_features(df):
@@ -247,7 +353,13 @@ def analyze():
     print("\n[2/4] 피처 생성 (21개)")
     features = make_features(df).dropna()
     print(f"  → 피처 {len(features.columns)}개, 데이터 {len(features):,}일")
-    
+
+    if len(features) < MIN_FEATURE_ROWS:
+        raise Exception(
+            f"피처 데이터 부족: {len(features)}일 (최소 {MIN_FEATURE_ROWS}일 필요). "
+            f"원본 {len(df):,}일 — 다운로드 데이터가 불완전할 가능성"
+        )
+
     print("\n[3/4] 정규화 및 미래 수익률 계산")
     features_norm = (features - features.mean()) / features.std()
     
@@ -395,16 +507,10 @@ def analyze_soxl_rsi():
     print("=" * 60)
     
     try:
-        # SOXL 데이터 다운로드 (yfinance, 분할조정 가격)
+        # SOXL 데이터 다운로드 (재시도 + 길이 검증)
         print("\n[1/3] SOXL 일봉 다운로드")
-        df = yf.download("SOXL", start="2010-01-01", progress=False, auto_adjust=True)
-        
-        if df.empty:
-            raise Exception("SOXL 데이터 다운로드 실패")
-        
-        if isinstance(df.columns, pd.MultiIndex):
-            df.columns = df.columns.get_level_values(0)
-        
+        df = _fetch_yf("SOXL", min_rows=2000, start="2010-01-01", auto_adjust=True)
+
         print(f"  → {len(df):,}일 ({df.index[0].date()} ~ {df.index[-1].date()})")
         
         # RSI(14) 계산 (Wilder's method, EWM)
