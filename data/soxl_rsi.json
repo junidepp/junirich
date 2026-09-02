@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-01T00:00:49.772429+00:00",
-  "target_date": "2026-08-31",
+  "generated_at": "2026-09-02T00:00:47.005610+00:00",
+  "target_date": "2026-09-01",
   "current": {
-    "close": 112.79,
-    "rsi": 41.27,
-    "rsi_prev": 40.54,
-    "rsi_change": 0.73
+    "close": 105.91,
+    "rsi": 38.83,
+    "rsi_prev": 41.27,
+    "rsi_change": -2.44
   },
   "signal": {
     "label": "약한 매수",
@@ -17,18 +17,13 @@
   "stats_1y": {
     "rsi_max": 88.45,
     "rsi_min": 33.4,
-    "days_below_45": 53,
+    "days_below_45": 54,
     "days_below_35": 2,
     "days_below_30": 0,
     "days_above_70": 50,
     "days_above_75": 19
   },
   "recent_30d": [
-    {
-      "date": "2026-07-21",
-      "close": 158.54,
-      "rsi": 44.43
-    },
     {
       "date": "2026-07-22",
       "close": 160.99,
@@ -173,6 +168,11 @@
       "date": "2026-08-31",
       "close": 112.79,
       "rsi": 41.27
+    },
+    {
+      "date": "2026-09-01",
+      "close": 105.91,
+      "rsi": 38.83
     }
   ]
 }
