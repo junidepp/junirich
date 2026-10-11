@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-10-10T00:00:56.711054+00:00",
-  "target_date": "2026-10-08",
+  "generated_at": "2026-10-11T00:01:00.143104+00:00",
+  "target_date": "2026-10-09",
   "current": {
-    "close": 142.52,
-    "rsi": 50.73,
-    "rsi_prev": 61.24,
-    "rsi_change": -10.51
+    "close": 139.76,
+    "rsi": 49.19,
+    "rsi_prev": 50.73,
+    "rsi_change": -1.53
   },
   "signal": {
     "label": "관망",
@@ -20,15 +20,10 @@
     "days_below_45": 58,
     "days_below_35": 2,
     "days_below_30": 0,
-    "days_above_70": 37,
+    "days_above_70": 36,
     "days_above_75": 14
   },
   "recent_30d": [
-    {
-      "date": "2026-08-27",
-      "close": 122.97,
-      "rsi": 44.72
-    },
     {
       "date": "2026-08-28",
       "close": 111.27,
@@ -173,6 +168,11 @@
       "date": "2026-10-08",
       "close": 142.52,
       "rsi": 50.73
+    },
+    {
+      "date": "2026-10-09",
+      "close": 139.76,
+      "rsi": 49.19
     }
   ]
 }
