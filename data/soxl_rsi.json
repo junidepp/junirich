@@ -1,34 +1,29 @@
 {
-  "generated_at": "2026-10-17T00:00:49.167759+00:00",
-  "target_date": "2026-10-15",
+  "generated_at": "2026-10-18T00:00:51.526172+00:00",
+  "target_date": "2026-10-16",
   "current": {
-    "close": 107.35,
-    "rsi": 34.55,
-    "rsi_prev": 35.72,
-    "rsi_change": -1.18
+    "close": 93.67,
+    "rsi": 29.98,
+    "rsi_prev": 34.55,
+    "rsi_change": -4.56
   },
   "signal": {
-    "label": "매수",
-    "color": "buy",
-    "icon": "🟢",
-    "action": "RSI ≤ 35: 2차 매수 구간 (비중 30%)",
-    "tier": 2
+    "label": "강한 매수",
+    "color": "strong-buy",
+    "icon": "🟢🟢",
+    "action": "RSI ≤ 30: 3차 매수 구간 (비중 40%)",
+    "tier": 3
   },
   "stats_1y": {
     "rsi_max": 88.45,
-    "rsi_min": 33.4,
-    "days_below_45": 62,
-    "days_below_35": 3,
-    "days_below_30": 0,
+    "rsi_min": 29.98,
+    "days_below_45": 63,
+    "days_below_35": 4,
+    "days_below_30": 1,
     "days_above_70": 35,
     "days_above_75": 14
   },
   "recent_30d": [
-    {
-      "date": "2026-09-03",
-      "close": 106.67,
-      "rsi": 39.31
-    },
     {
       "date": "2026-09-04",
       "close": 117.2,
@@ -173,6 +168,11 @@
       "date": "2026-10-15",
       "close": 107.35,
       "rsi": 34.55
+    },
+    {
+      "date": "2026-10-16",
+      "close": 93.67,
+      "rsi": 29.98
     }
   ]
 }
